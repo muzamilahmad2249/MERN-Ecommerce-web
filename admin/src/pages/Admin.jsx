@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import AddProduct from '../components/AddProduct';
-import ListProduct from '../components/listProduct';
+import ListProduct from '../components/ListProduct';
 
 const Admin = () => {
   return (
