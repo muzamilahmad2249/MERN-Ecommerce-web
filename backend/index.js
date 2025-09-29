@@ -30,15 +30,21 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+app.post("/addproduct", async (req, res) => {
+  let products = await Product.find({});
+  let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
 
-app.use("/images", express.static("upload/images"));
-
-app.post("/upload", upload.single("product"), (req, res) => {
-  res.json({
-    success: 1,
-    image_url: `/images/${req.file.filename}`, // no localhost
+  const product = new Product({
+    id,
+    name: req.body.name,
+    image: req.body.image, // ✅ should be Cloudinary URL
+    category: req.body.category,
+    new_price: req.body.new_price,
+    old_price: req.body.old_price,
   });
+
+  await product.save();
+  res.json({ success: true, name: req.body.name });
 });
 
 // Import routes
